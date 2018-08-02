@@ -1,12 +1,14 @@
-import { GraphQLServer } from 'graphql-yoga';
 import cors from 'cors';
-import morgan from 'morgan';
+import { GraphQLServer } from 'graphql-yoga';
 import helmet from 'helmet';
+import morgan from 'morgan';
+import schema from './schema';
 
 class App {
   public app: GraphQLServer;
   constructor () {
     this.app = new GraphQLServer({
+      schema,
     });
     this.middlewares();
   }
