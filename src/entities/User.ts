@@ -1,4 +1,4 @@
-import bcrypt, { hash, compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { IsEmail } from "class-validator";
 import {
   BaseEntity,
@@ -79,11 +79,11 @@ class User extends BaseEntity {
   }
 
   public comparePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password)
+    return compare(password, this.password)
   }
   
   private hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, BCRYPT_ROUNDS);
+    return hash(password, BCRYPT_ROUNDS);
   }
 }
 
