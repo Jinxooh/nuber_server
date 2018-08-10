@@ -7,9 +7,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import Chat from './Chat';
 
 const BCRYPT_ROUNDS = 10;
 
@@ -61,6 +63,9 @@ class User extends BaseEntity {
   @Column({ type: "double precision", default: 0 })
   lastOrientation: number;
 
+  @Column({ type: "text", nullable: true })
+  fbId: string;
+
   @CreateDateColumn() createdAt: string;
 
   @UpdateDateColumn() updatedAt: string;
@@ -68,6 +73,9 @@ class User extends BaseEntity {
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
   }
+
+  @ManyToOne(type => Chat, chat => chat.participants)
+  chat: Chat;
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -81,7 +89,7 @@ class User extends BaseEntity {
   public comparePassword(password: string): Promise<boolean> {
     return compare(password, this.password)
   }
-  
+
   private hashPassword(password: string): Promise<string> {
     return hash(password, BCRYPT_ROUNDS);
   }
