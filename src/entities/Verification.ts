@@ -4,13 +4,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { verificationTarget } from "../types/types";
+import User from './User';
 
-const PHONE: string = 'PHONE';
-const EMAIL: string = 'EMAIL';
+const PHONE = "PHONE";
+const EMAIL = "EMAIL";
 
 @Entity()
 class Verification extends BaseEntity {
@@ -26,7 +28,10 @@ class Verification extends BaseEntity {
   key: string;
 
   @Column({ type: "boolean", default: false })
-  user: boolean;
+  used: boolean;
+
+  @ManyToOne(type => User, user => user.verifications)
+  user: User;
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;
@@ -34,7 +39,7 @@ class Verification extends BaseEntity {
   @BeforeInsert()
   createKey(): void {
     if (this.target === PHONE) {
-      this.key = Math.floor(Math.random() * 10000).toString();
+      this.key = Math.floor(Math.random() * 100000).toString();
     } else if (this.target === EMAIL) {
       this.key = Math.random().toString(36).substring(2);
     }

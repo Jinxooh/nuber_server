@@ -4,7 +4,8 @@ import {
   FacebookConnectResponse
 } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
- const resolvers: Resolvers = {
+
+const resolvers: Resolvers = {
   Mutation: {
     FacebookConnect: async (
       _,
@@ -17,7 +18,7 @@ import { Resolvers } from "../../../types/resolvers";
           return {
             ok: true,
             error: null,
-            token: "Coming soon"
+            token: "Coming soon, already"
           };
         }
       } catch (error) {
@@ -30,13 +31,13 @@ import { Resolvers } from "../../../types/resolvers";
       try {
         await User.create({
           ...args,
-          profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square`,
+          profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square`
         }).save();
         return {
           ok: true,
           error: null,
-          token: 'Coming Soon!',
-        }
+          token: "Coming soon, created"
+        };
       } catch (error) {
         return {
           ok: false,
@@ -47,4 +48,5 @@ import { Resolvers } from "../../../types/resolvers";
     }
   }
 };
- export default resolvers;
+
+export default resolvers;

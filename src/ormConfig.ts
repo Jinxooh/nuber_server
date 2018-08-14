@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 
-const defaultConnectionOptions: ConnectionOptions = {
+const connectionOptions: ConnectionOptions = {
   database: 'nuber',
   type: "postgres",
   logging: true,
@@ -12,4 +12,4 @@ const defaultConnectionOptions: ConnectionOptions = {
   password: process.env.DB_PASSWORD,
 };
 
-export default defaultConnectionOptions;
+export default connectionOptions;
