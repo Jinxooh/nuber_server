@@ -1,4 +1,4 @@
-type Rdie {
+type Ride {
   id: Int!
   status: String!
   pickUpAddress: String!
