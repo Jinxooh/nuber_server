@@ -1,5 +1,4 @@
 import mg from 'mailgun-js';
-import { EmbeddedMetadata } from 'typeorm/metadata/EmbeddedMetadata';
 
 const mailgunClient = new mg({
   apiKey: process.env.MAILGUN_APIKEY || '',
