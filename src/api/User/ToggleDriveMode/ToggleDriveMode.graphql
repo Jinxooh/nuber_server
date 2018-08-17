@@ -1,0 +1,8 @@
+type ToggleDriveModeResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  ToggleDriveMode: ToggleDriveModeResponse!
+}
