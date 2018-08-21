@@ -18,7 +18,6 @@ const resolvers: Resolvers = {
         const user: User = req.user;
         const notNull:any = cleanNullArgs(args);
         if (notNull.password !== null || notNull.password !== undefined){
-          // console.log('hi', notNull.password);
           user.password = notNull.password;
           user.save();
           delete notNull.password;
