@@ -31,7 +31,7 @@ class Place extends BaseEntity {
   @Column({ type: "int", nullable: true })
   userId: number;
 
-  @ManyToOne(type => User, user => user.places);
+  @ManyToOne(type => User, user => user.places)
   user: User;
 
   @CreateDateColumn() createdAt: string;
