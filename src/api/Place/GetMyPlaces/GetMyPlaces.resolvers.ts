@@ -5,7 +5,7 @@ import User from "../../../entities/User";
 
 const resolvers: Resolvers= {
   Query: {
-    GetMyPlaces: privateResolver(async (_, __ { req }): Promise<GetMyPlacesResponse> => {
+    GetMyPlaces: privateResolver(async (_, __, { req }): Promise<GetMyPlacesResponse> => {
       try {
         const user = await User.findOne(
           {id: req.user.id },
@@ -34,3 +34,5 @@ const resolvers: Resolvers= {
     })
   }
 }
+
+export default resolvers;
