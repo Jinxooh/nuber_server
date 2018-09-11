@@ -7,15 +7,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm";
 import Chat from "./Chat";
 import Message from "./Message";
-import Ride from "./Ride";
 import Place from "./Place";
+import Ride from "./Ride";
 
 const BCRYPT_ROUNDS = 10;
 

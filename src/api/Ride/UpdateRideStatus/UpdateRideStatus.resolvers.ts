@@ -1,12 +1,12 @@
-import { Resolvers } from "../../../types/resolvers";
-import privateResolver from "../../../utils/privateResolver";
-import User from "../../../entities/User";
+import Chat from "../../../entities/Chat";
 import Ride from "../../../entities/Ride";
+import User from "../../../entities/User";
 import {
   UpdateRideStatusMutationArgs,
   UpdateRideStatusResponse
 } from "../../../types/graph";
-import Chat from "../../../entities/Chat";
+import { Resolvers } from "../../../types/resolvers";
+import privateResolver from "../../../utils/privateResolver";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -14,7 +14,7 @@ const resolvers: Resolvers = {
       async (
         _,
         args: UpdateRideStatusMutationArgs,
-        { req }
+        { req, pubSub }
       ): Promise<UpdateRideStatusResponse> => {
         const user: User = req.user;
         if (user.isDriving) {
@@ -32,20 +32,23 @@ const resolvers: Resolvers = {
                 ride.driver = user;
                 user.isTaken = true;
                 user.save();
-                await Chat.create({
+                const chat = await Chat.create({
                   driver: user,
-                  passenger: ride.passenger,
+                  passenger: ride.passenger
                 }).save();
-              } else {
-                ride = await Ride.findOne({
-                  id: args.rideId,
-                  driver: user
-                });
+                ride.chat = chat;
+                ride.save();
               }
+            } else {
+              ride = await Ride.findOne({
+                id: args.rideId,
+                driver: user
+              });
             }
             if (ride) {
               ride.status = args.status;
               ride.save();
+              pubSub.publish("rideUpdate", { RideStatusSubscription: ride });
               return {
                 ok: true,
                 error: null
@@ -72,5 +75,4 @@ const resolvers: Resolvers = {
     )
   }
 };
-
 export default resolvers;

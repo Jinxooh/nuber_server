@@ -11,7 +11,6 @@ type Query {
   GetRide(rideId: Int!): GetRideResponse!
   GetMyProfile: GetMyProfileResponse!
   GetNearbyDrivers: GetNearbyDriversResponse!
-  user: User
 }
 
 type Chat {
@@ -21,6 +20,8 @@ type Chat {
   passenger: User!
   driverId: Int
   driver: User!
+  rideId: Int
+  ride: Ride!
   createdAt: String!
   updatedAt: String
 }
@@ -28,6 +29,7 @@ type Chat {
 type Message {
   id: Int!
   text: String!
+  chatId: Int
   chat: Chat!
   user: User!
   createdAt: String!
@@ -122,10 +124,12 @@ type Ride {
   price: Float!
   distance: String!
   duration: String!
-  driverId: Int!
+  driverId: Int
   driver: User!
   passengerId: Int!
   passenger: User!
+  chat: Chat
+  chatId: Int
   createdAt: String!
   updatedAt: String
 }
@@ -218,11 +222,11 @@ type User {
   lastLat: Float
   lastOrientation: Float
   fbId: String
-  chatsAsDriver: [Chat]
-  chatsASPassenger: [Chat]
   messages: [Message]
   ridesAsPassenger: [Ride]
   ridesAsDriver: [Ride]
+  chatsAsDriver: [Chat]
+  chatsAsPassenger: [Chat]
   places: [Place]
   createdAt: String!
   updatedAt: String
