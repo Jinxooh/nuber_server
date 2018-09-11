@@ -80,15 +80,16 @@ type GetNearbyRideResponse {
   ride: Ride
 }
 
+type Subscription {
+  NearbyRideSubscription: Ride
+  RideStatusSubscription: Ride
+  DriversSubscription: User
+}
+
 type RequestRideResponse {
   ok: Boolean!
   error: String
   ride: Ride
-}
-
-type Subscription {
-  RideStatusSubscription: Ride
-  DriversSubscription: User
 }
 
 type Ride {
